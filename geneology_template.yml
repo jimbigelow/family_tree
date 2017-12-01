@@ -1,0 +1,32 @@
+# family tree for James Henry Bigelow
+chart:
+   person:
+      name: "James Bigelow"
+      id: "1"
+      birth:
+         - date: "7/31/1951"
+         - place: "Colon, Panama"
+      death:
+         - date:
+         - place:
+      - parents:
+         - person:
+            name:
+            id:
+         - person:
+            name:
+            id:
+
+      - relations:
+         relation:
+            person:
+            type:
+            from:
+            to:
+            - children:
+               child:
+                  name:
+                  born:
+                     - date:
+                     - place:
+   person:

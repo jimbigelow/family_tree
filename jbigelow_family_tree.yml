@@ -1,0 +1,49 @@
+# family tree for James Henry Bigelow
+family_tree:
+   person:
+      name: "James Bigelow"
+      id: "1"
+      birth:
+         date: "7/31/1951"
+         place: "Colon, Panama"
+      death:
+         date:
+         place:
+      parents:
+         - parent:
+            name: "Henry W. Bigelow jr."
+            id: "2"
+         - parent:
+            name: "Ruth Knapp Bigelow"
+            id: "3"
+
+      relations:
+         - person:
+            name: "Debbie Callaway"
+            from: "6/1970"
+            to:   "9/1971"
+            children:
+            - child: {name: "Jessica (May) Brook Bigelow",
+                      born: {date: "4/10/1971", place: "Boulder, CO"} }
+         - person:
+            name: "Susan Lanz"
+            type: "marriage"
+            from: "2/14/1972"
+            to:   "7/1/1979"
+            children:
+            - child:
+               name: "Jaimie Suzanne Bigelow"
+               born:
+                  date: "11/15/1976"
+                  place: "Ithica, NY"
+         - person:
+            name: "Sheila Saxton Ames"
+            type: "marriage"
+            from: "6/6/1983"
+            to: "present"
+            children:
+               - child:
+                  name: "Erin Neoma Bigelow"
+                  born:
+                    date: "9/25/1983"
+                    place: "Lake Oswego, OR"
