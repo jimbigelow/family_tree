@@ -22,13 +22,6 @@ def parse_args(argv):
                             default=sys.stdin)
     return arg_parser.parse_args(argv)
 
-def add_graph_node(dot, name):
-    dot.node(name)
-
-
-def add_graph_edge(dot, ancestor, decendent):
-    dot.edge(ancestor, decendent)
-
 
 def main(argv):
     args = parse_args(argv)
@@ -49,33 +42,40 @@ def draw_graph(args, graph):
         if "person" in fam:
             person = fam["person"]
             if "name" in person:
-                add_graph_node(dot, person["name"])
+                add_graph_node(dot, person)
                 if "parents" in person:
                     for parent_data in person["parents"]:
                         parent = parent_data["parent"]
-                        add_graph_node(dot, parent["name"])
-                        add_graph_edge(dot, parent["name"], person["name"])
+                        add_graph_node(dot, parent)
+                        add_graph_edge(dot, parent, person)
                 if "relations" in person:
                     layout = '{{rank=same;\n\t"{}";\n'.format(person["name"])
                     for spouse_data in person["relations"]:
                         spouse = spouse_data["person"]
-                        add_graph_node(dot, spouse["name"])
-                        add_graph_edge(dot, person["name"], spouse["name"])
+                        add_graph_node(dot, spouse)
+                        add_graph_edge(dot, person, spouse)
                         layout += '\t"{}";\n'.format(spouse["name"])
                         if "children" in spouse:
                             for child_data in spouse["children"]:
                                 child = child_data["child"]
-                                add_graph_node(dot, child['name'])
-                                add_graph_edge(dot, spouse['name'],
-                                               child['name'])
-                                add_graph_edge(dot, person['name'],
-                                               child['name'])
+                                add_graph_node(dot, child)
+                                add_graph_edge(dot, spouse, child)
+                                add_graph_edge(dot, person, child)
                     layout += "}\n"
                     dot.body.append(layout)
 
     if args.verbose:
         print(dot.source)
     dot.render("geneology_chart.gv", view=True)
+
+
+def add_graph_node(dot, person):
+    dot.node(person['name'])
+
+
+def add_graph_edge(dot, ancestor, decendent):
+    dot.edge(ancestor['name'], decendent['name'])
+
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv))

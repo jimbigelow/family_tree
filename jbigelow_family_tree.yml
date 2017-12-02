@@ -20,6 +20,8 @@ family_tree:
       relations:
          - person:
             name: "Debbie Callaway"
+            type: "consensual"
+            id: "1*1"
             from: "6/1970"
             to:   "9/1971"
             children:
@@ -27,6 +29,7 @@ family_tree:
                       born: {date: "4/10/1971", place: "Boulder, CO"} }
          - person:
             name: "Susan Lanz"
+            id: "1*2"
             type: "marriage"
             from: "2/14/1972"
             to:   "7/1/1979"
@@ -38,6 +41,7 @@ family_tree:
                   place: "Ithica, NY"
          - person:
             name: "Sheila Saxton Ames"
+            id: "1*3"
             type: "marriage"
             from: "6/6/1983"
             to: "present"
