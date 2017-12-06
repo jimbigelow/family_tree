@@ -17,7 +17,7 @@ def parse_args(argv):
     arg_parser.add_argument('geneology_data',
                             help='the optional input file to process, '
                                  'defaults to stdin',
-                            nargs='?',
+                            nargs='*',
                             type=argparse.FileType('r'),
                             default=sys.stdin)
     return arg_parser.parse_args(argv)
@@ -25,22 +25,25 @@ def parse_args(argv):
 
 def main(argv):
     args = parse_args(argv)
-
-    try:
-        graph = yaml.load(args.geneology_data)
-    except yaml.YAMLError as exc:
-        print(exc)
-        return 1
-    draw_graph(args, graph)
+    dot = graphviz.Graph(node_attr={'shape':'plaintext'})
+    for geneology_file in args.geneology_data:
+        try:
+            geneology = yaml.load(geneology_file)
+        except yaml.YAMLError as exc:
+            print(exc)
+            return 1
+        draw_graph(dot, geneology)
+    if args.verbose:
+        print(dot.source)
+    dot.render("geneology_chart.gv", view=True)
     return 0
 
 
-def draw_graph(args, graph):
-    dot = graphviz.Graph(node_attr={'shape':'plaintext'})
+def draw_graph(dot, graph):
     if "family_tree" in graph:
         fam = graph["family_tree"]
-        if "person" in fam:
-            person = fam["person"]
+        for person_data in  fam:
+            person = person_data["person"]
             if "name" in person:
                 add_graph_node(dot, person)
                 if "parents" in person:
@@ -55,18 +58,14 @@ def draw_graph(args, graph):
                         add_graph_node(dot, spouse)
                         add_graph_edge(dot, person, spouse)
                         layout += '\t"{}";\n'.format(spouse["name"])
-                        if "children" in spouse:
-                            for child_data in spouse["children"]:
-                                child = child_data["child"]
-                                add_graph_node(dot, child)
-                                add_graph_edge(dot, spouse, child)
-                                add_graph_edge(dot, person, child)
                     layout += "}\n"
                     dot.body.append(layout)
+                if "children" in person:
+                    for child_data in person["children"]:
+                        child = child_data["child"]
+                        add_graph_node(dot, child)
+                        add_graph_edge(dot, person, child)
 
-    if args.verbose:
-        print(dot.source)
-    dot.render("geneology_chart.gv", view=True)
 
 
 def add_graph_node(dot, person):
