@@ -1,0 +1,8 @@
+#  family tree for Florence McLeod Bergen wife of Henry W Bigelow sr.
+fanily_tree:
+   - person:
+      name: "Florence McLeod Bergen"
+      birth:
+         date: "9/27/1866"
+      death:
+         date: "8/13/1946"
